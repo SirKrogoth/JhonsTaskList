@@ -38,8 +38,19 @@ async function removeTaskByID(id: ObjectId){
     return result;
 }
 
+async function listAllTasks(){
+    const db = await database.connect();
+
+    const result = await db.collection(process.env.COLLECTION_NAME).find({}).toArray();
+
+    database.disconnect();
+
+    return result;
+}
+
 export default {
     insertOneTask,
     removeOneTaskByTitle,
-    removeTaskByID
+    removeTaskByID,
+    listAllTasks
 }

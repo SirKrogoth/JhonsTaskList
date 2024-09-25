@@ -52,8 +52,22 @@ async function removeTaskByID(req: Request, res: Response, next: any){
     }
 }
 
+async function listAllTasks(req: Request, res: Response, next: any){
+    try {
+        const result = await taskRepository.listAllTasks();
+
+        if(!result) return res.status(StatusCodes.NOT_FOUND).end();
+
+        res.status(StatusCodes.OK).json(result).end();
+    } catch (error) {
+        console.error("Erro na function listAllTasks taskController. Message: " + error);
+        res.status(StatusCodes.BAD_REQUEST).json(error).end();
+    }
+}
+
 export default {
     insertOneTask,
     removeOneTaskByTitle,
-    removeTaskByID
+    removeTaskByID,
+    listAllTasks
 }

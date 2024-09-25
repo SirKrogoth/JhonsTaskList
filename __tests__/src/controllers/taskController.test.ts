@@ -1,9 +1,11 @@
-import {jest, describe, expect, it, beforeAll, afterAll} from '@jest/globals';
+import { describe, expect, it, beforeAll } from '@jest/globals';
 import app from '../../../src/app';
 import request from 'supertest';
 import iTask from '../../../src/models/interfaces/iTask';
 import taskRepository from '../../../src/models/repository/taskRepository';
 import { ObjectId } from 'mongodb';
+import taskController from '../../../src/controllers/taskController';
+import { nextTick } from 'process';
 
 let deletedId: ObjectId; 
 let deletedIDNotFound: ObjectId = new ObjectId('507f1f77bcf86cd799439011');
@@ -87,7 +89,7 @@ describe('Testando rota /task do taskController.', () => {
         const result = await request(app)
             .get('/removeTaskByTitle/' + title);
 
-        expect(result.status).toEqual(200);
+        expect(result.status).toBe(200);
     });
 });
 
@@ -104,5 +106,15 @@ describe('DELETE /removeTaskByID', () => {
             .delete(`/removeTaskById/${deletedIDNotFound}`);
 
         expect(result.status).toBe(404);
+    });
+});
+
+describe('GET /tasks', () => {
+    it('GET /tasks - Deverá retornar 200 OK', async () => {
+        const result = await request(app)
+            .get('/tasks')
+            .set('Accept', 'application/json'); 
+        
+            expect(result.status).toBe(200);
     });
 });

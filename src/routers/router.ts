@@ -7,6 +7,7 @@ const router = Router();
 router.post('/task', validateTaskSchema, taskController.insertOneTask);
 
 router.get('/removeTaskByTitle/:title', taskController.removeOneTaskByTitle);
+router.get('/tasks', taskController.listAllTasks);
 
 router.delete('/removeTaskByID/:id', taskController.removeTaskByID);
 
