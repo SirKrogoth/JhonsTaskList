@@ -65,9 +65,27 @@ async function listAllTasks(req: Request, res: Response, next: any){
     }
 }
 
+async function listTaskById(req: Request, res: Response, next: any){
+    try {
+        const id = req.params.id as string; 
+
+        const findById = new ObjectId(id);
+
+        const result = await taskRepository.listTaskById(findById);
+
+        if(!result || result.deletedCount === 0) return res.status(StatusCodes.NOT_FOUND).end();
+
+        res.status(StatusCodes.OK).json(result).end();
+    } catch (error) {
+        console.error("Erro na function listTaskById taskController. Message: " + error);
+        res.status(StatusCodes.BAD_REQUEST).json(error).end();
+    }
+}
+
 export default {
     insertOneTask,
     removeOneTaskByTitle,
     removeTaskByID,
-    listAllTasks
+    listAllTasks,
+    listTaskById
 }

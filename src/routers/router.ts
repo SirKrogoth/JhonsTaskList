@@ -8,6 +8,7 @@ router.post('/task', validateTaskSchema, taskController.insertOneTask);
 
 router.get('/removeTaskByTitle/:title', taskController.removeOneTaskByTitle);
 router.get('/tasks', taskController.listAllTasks);
+router.get('/task/:id', taskController.listTaskById);
 
 router.delete('/removeTaskByID/:id', taskController.removeTaskByID);
 

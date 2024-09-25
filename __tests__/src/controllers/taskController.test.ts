@@ -4,10 +4,8 @@ import request from 'supertest';
 import iTask from '../../../src/models/interfaces/iTask';
 import taskRepository from '../../../src/models/repository/taskRepository';
 import { ObjectId } from 'mongodb';
-import taskController from '../../../src/controllers/taskController';
-import { nextTick } from 'process';
 
-let deletedId: ObjectId; 
+let deletedId1: ObjectId; 
 let deletedIDNotFound: ObjectId = new ObjectId('507f1f77bcf86cd799439011');
 
 beforeAll(async () => {
@@ -18,7 +16,7 @@ beforeAll(async () => {
     }
 
     const result = await taskRepository.insertOneTask(deletedTask);
-    deletedId = result.insertedId;
+    deletedId1 = result.insertedId;
 });
 
 describe('Testando rota /task do taskController.', () => {
@@ -32,7 +30,7 @@ describe('Testando rota /task do taskController.', () => {
         const result = await request(app)
             .post('/task')
             .send(newTask)
-            .set('Accept', 'application/json');    
+            .set('Accept', 'application/json');
 
         //verificar se o status retornado é 201
         expect(result.status).toBe(201);
@@ -96,7 +94,7 @@ describe('Testando rota /task do taskController.', () => {
 describe('DELETE /removeTaskByID', () => {
     it('DELETE /removeTaskById - Deverá retornar 200 OK', async () => {
         const result = await request(app)
-            .delete(`/removeTaskById/${deletedId}`);
+            .delete(`/removeTaskById/${deletedId1}`);
 
         expect(result.status).toBe(200);
     });
@@ -113,6 +111,16 @@ describe('GET /tasks', () => {
     it('GET /tasks - Deverá retornar 200 OK', async () => {
         const result = await request(app)
             .get('/tasks')
+            .set('Accept', 'application/json'); 
+        
+            expect(result.status).toBe(200);
+    });
+});
+
+describe('Testando a rota que irá retornar uma task através do seu ID', () => {
+    it('GET /task/:id - Deverá retornar 200 OK', async () => {
+        const result = await request(app)
+            .get(`/task/66f0bcf239b045cb6d87e1f8`)
             .set('Accept', 'application/json'); 
         
             expect(result.status).toBe(200);
