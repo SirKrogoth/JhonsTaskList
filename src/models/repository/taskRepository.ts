@@ -60,10 +60,23 @@ async function listTaskById(id: ObjectId){
     return result;
 }
 
+async function putTaskById(id: ObjectId, task: iTask){
+    const db = await database.connect();
+
+    const result = await db.collection(process.env.COLLECTION_NAME).updateOne(
+        { _id: id },
+        { $set: task }
+    );
+    database.disconnect();
+
+    return result;
+}
+
 export default {
     insertOneTask,
     removeOneTaskByTitle,
     removeTaskByID,
     listAllTasks,
-    listTaskById
+    listTaskById,
+    putTaskById
 }

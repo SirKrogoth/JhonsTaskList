@@ -82,10 +82,32 @@ async function listTaskById(req: Request, res: Response, next: any){
     }
 }
 
+async function putTaskById(req: Request, res: Response, next: any){
+    try {
+        const task: iTask = req.body as iTask;
+        const id: ObjectId = new ObjectId(req.params.id as string);
+
+        console.log(task);
+
+        const result = await taskRepository.putTaskById(id, task);
+
+        if(result.matchedCount === 0){
+            return res.status(StatusCodes.BAD_REQUEST).json(result).end();
+        }
+
+        return res.status(StatusCodes.OK).json(result).end();
+
+    } catch (error) {
+        console.error("Erro na function putTaskById taskController. Message: " + error);
+        res.status(StatusCodes.BAD_REQUEST).json(error).end();
+    }
+}
+
 export default {
     insertOneTask,
     removeOneTaskByTitle,
     removeTaskByID,
     listAllTasks,
-    listTaskById
+    listTaskById,
+    putTaskById
 }

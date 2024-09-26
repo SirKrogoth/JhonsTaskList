@@ -126,3 +126,24 @@ describe('Testando a rota que irá retornar uma task através do seu ID', () => 
             expect(result.status).toBe(200);
     });
 });
+
+describe('Testando a rota que irá atualizar uma task através de seu ID', () => {
+   it('PUT /putTask - Deverá retornar 200 OK', async () => {
+        const newTask: iTask = {
+            title: 'Title alterado',
+            description: 'Description alterado',
+            completed: true
+        }
+
+        const result = await request(app)
+            .put('/putTask/66f0bcf239b045cb6d87e1f8')
+            .send({
+                title: newTask.title,
+                description: newTask.description,
+                completed: newTask.completed
+            })
+            .set('Accept', 'application/json');
+
+            expect(result.status).toBe(200);
+   });
+});

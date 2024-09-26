@@ -12,4 +12,6 @@ router.get('/task/:id', taskController.listTaskById);
 
 router.delete('/removeTaskByID/:id', taskController.removeTaskByID);
 
+router.put('/putTask/:id', taskController.putTaskById);
+
 export default router;
