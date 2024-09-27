@@ -72,11 +72,24 @@ async function putTaskById(id: ObjectId, task: iTask){
     return result;
 }
 
+async function findByTitle(title: string){
+    const db = await database.connect();
+
+    const result = await db.collection(process.env.COLLECTION_NAME).findOne({
+        title: title
+    });
+
+    database.disconnect();
+
+    return result;
+}
+
 export default {
     insertOneTask,
     removeOneTaskByTitle,
     removeTaskByID,
     listAllTasks,
     listTaskById,
-    putTaskById
+    putTaskById,
+    findByTitle
 }

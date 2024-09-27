@@ -147,3 +147,13 @@ describe('Testando a rota que irá atualizar uma task através de seu ID', () =>
             expect(result.status).toBe(200);
    });
 });
+
+describe('Testando uma busca por título.', () => {
+    it('GET /findByTitle/:title - Deverá retornar 200 OK', async () => {
+        const result = await request(app)
+            .get(`/findByTitle/Enviar fone para Monique`)
+            .set('Accept', 'application/json');
+
+            expect(result.status).toBe(200);
+    });
+})
