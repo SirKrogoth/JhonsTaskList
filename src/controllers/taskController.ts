@@ -117,6 +117,19 @@ async function findByTitle(req: Request, res: Response, next: any){
     }
 }
 
+async function findOpenTasks(req: Request, res: Response, next: any){
+    try {
+        const result = await taskRepository.findOpenTasks();
+
+        if(!result) return res.status(StatusCodes.BAD_REQUEST).end();
+
+        return res.status(StatusCodes.OK).json(result).end();
+    } catch (error) {
+        console.error("Erro na function findOpenTasks taskController. Message: " + error);
+        res.status(StatusCodes.BAD_REQUEST).json(error).end();
+    }
+}
+
 export default {
     insertOneTask,
     removeOneTaskByTitle,
@@ -124,5 +137,6 @@ export default {
     listAllTasks,
     listTaskById,
     putTaskById,
-    findByTitle
+    findByTitle,
+    findOpenTasks
 }
