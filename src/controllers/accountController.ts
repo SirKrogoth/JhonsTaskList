@@ -3,6 +3,7 @@ import { StatusCodes } from 'http-status-codes';
 import iUser from '../models/interfaces/iUser';
 import accountRepository from '../models/repository/accountRepository';
 import auth from '../secure/auth';
+import logger from '../config/logger';
 
 
 async function findByUser(req: Request, res: Response, next: any){
@@ -13,10 +14,7 @@ async function findByUser(req: Request, res: Response, next: any){
 
         if(verifyUser !== null){
             if(verifyUser.senha === user.senha){
-                console.log(verifyUser);
-                console.log(verifyUser._id);
                 if(verifyUser._id){
-                    console.log("FOI");
                     //Criar token
                     const token = await auth.sign(verifyUser._id);
 
@@ -28,10 +26,11 @@ async function findByUser(req: Request, res: Response, next: any){
             }
         }
 
-        res.status(StatusCodes.BAD_REQUEST).end();
+        logger.warn("Usuário não encontrado.");
+        res.status(StatusCodes.UNAUTHORIZED).end();
     } catch (error) {
-        console.error("Erro na function findByUser accountController. Message: " + error);
-        res.status(StatusCodes.BAD_REQUEST).json(error).end();
+        logger.error("Erro na function findByUser accountController. Message: " + error);        
+        res.status(StatusCodes.UNAUTHORIZED).json(error).end();
     }
 }
 

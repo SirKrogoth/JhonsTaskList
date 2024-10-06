@@ -3,6 +3,7 @@ import { StatusCodes } from 'http-status-codes';
 import iTask from '../models/interfaces/iTask';
 import taskRepository from '../models/repository/taskRepository';
 import { ObjectId } from 'mongodb';
+import logger from '../config/logger';
 
 async function insertOneTask(req: Request, res: Response, next: any){
     try {
@@ -14,7 +15,7 @@ async function insertOneTask(req: Request, res: Response, next: any){
 
         res.status(StatusCodes.CREATED).json(result).end();
     } catch (error) {
-        console.error("Erro na function insertOneTask taskController. Message: " + error);
+        logger.error("Erro na function insertOneTask taskController. Message: " + error);
         res.status(StatusCodes.BAD_REQUEST).json(error).end();
     }
 }
@@ -29,7 +30,7 @@ async function removeOneTaskByTitle(req: Request, res: Response, next: any){
 
         res.status(StatusCodes.OK).end();
     } catch (error) {
-        console.error("Erro na function removeOneTaskByTitle taskController. Message: " + error);
+        logger.error("Erro na function removeOneTaskByTitle taskController. Message: " + error);
         res.status(StatusCodes.BAD_REQUEST).json(error).end();
     }
 }
@@ -47,7 +48,7 @@ async function removeTaskByID(req: Request, res: Response, next: any){
         res.status(StatusCodes.OK).end();
 
     } catch (error) {
-        console.error("Erro na function removeTaskByID taskController. Message: " + error);
+        logger.error("Erro na function removeTaskByID taskController. Message: " + error);
         res.status(StatusCodes.BAD_REQUEST).json(error).end();
     }
 }
@@ -60,7 +61,7 @@ async function listAllTasks(req: Request, res: Response, next: any){
 
         res.status(StatusCodes.OK).json(result).end();
     } catch (error) {
-        console.error("Erro na function listAllTasks taskController. Message: " + error);
+        logger.error("Erro na function listAllTasks taskController. Message: " + error);
         res.status(StatusCodes.BAD_REQUEST).json(error).end();
     }
 }
@@ -77,7 +78,7 @@ async function listTaskById(req: Request, res: Response, next: any){
 
         res.status(StatusCodes.OK).json(result).end();
     } catch (error) {
-        console.error("Erro na function listTaskById taskController. Message: " + error);
+        logger.error("Erro na function listTaskById taskController. Message: " + error);
         res.status(StatusCodes.BAD_REQUEST).json(error).end();
     }
 }
@@ -96,7 +97,7 @@ async function putTaskById(req: Request, res: Response, next: any){
         return res.status(StatusCodes.OK).json(result).end();
 
     } catch (error) {
-        console.error("Erro na function putTaskById taskController. Message: " + error);
+        logger.error("Erro na function putTaskById taskController. Message: " + error);
         res.status(StatusCodes.BAD_REQUEST).json(error).end();
     }
 }
@@ -112,7 +113,7 @@ async function findByTitle(req: Request, res: Response, next: any){
         return res.status(StatusCodes.OK).json(result).end();
                 
     } catch (error) {
-        console.error("Erro na function findByTitle taskController. Message: " + error);
+        logger.error("Erro na function findByTitle taskController. Message: " + error);
         res.status(StatusCodes.BAD_REQUEST).json(error).end();
     }
 }
@@ -125,7 +126,7 @@ async function findOpenTasks(req: Request, res: Response, next: any){
 
         return res.status(StatusCodes.OK).json(result).end();
     } catch (error) {
-        console.error("Erro na function findOpenTasks taskController. Message: " + error);
+        logger.error("Erro na function findOpenTasks taskController. Message: " + error);
         res.status(StatusCodes.BAD_REQUEST).json(error).end();
     }
 }
