@@ -1,6 +1,7 @@
 import jwt, { VerifyOptions } from 'jsonwebtoken';
 import fs from 'fs';
 import path from 'path';
+import logger from '../config/logger';
 
 const publicKey = fs.readFileSync(path.resolve(__dirname, '../../keys/public.key'), 'utf-8');
 const privateKey = fs.readFileSync(path.resolve(__dirname, '../../keys/private.key'), 'utf-8');
@@ -19,7 +20,7 @@ async function verify(token: string){
             _id: decoded?._id
         }
     } catch (error) {
-        console.error(`Houve um erro no verify: ${error}`);
+        logger.error(`Houve um erro no verify: ${error}`);
         return null;
     }
 }
@@ -33,7 +34,7 @@ async function sign(_id: ObjectId){
             algorithm: jwtAlgorithm
         });
     } catch (error) {
-        console.error(`Houve um erro no sign: ${error}`);
+        logger.error(`Houve um erro no sign: ${error}`);
         return null;
     }
 }
@@ -46,7 +47,7 @@ async function decodedToken(token: string){
 
         return decoded;
     } catch (error) {
-        console.error(error);
+        logger.error(error);
         return null;
     }
 }
